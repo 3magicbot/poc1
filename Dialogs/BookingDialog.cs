@@ -14,7 +14,7 @@ namespace MagicBot001.Dialogs
 {
     public class BookingDialog : CancelAndHelpDialog
     {
-        private const string DestinationStepMsgText = "Where would you like to travel to?";
+        private const string DestinationStepMsgText = "How may I help you today?";
         private const string OriginStepMsgText = "Where are you traveling from?";
 
         public BookingDialog()

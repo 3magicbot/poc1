@@ -34,7 +34,12 @@ namespace MagicBot001.Dialogs
 
             var waterfallSteps = new WaterfallStep[]
             {
+                /*
                 IntroStepAsync,
+                ActStepAsync,
+                FinalStepAsync,
+                */
+                IntroStepNewAsync,
                 ActStepAsync,
                 FinalStepAsync,
             };
@@ -86,6 +91,15 @@ namespace MagicBot001.Dialogs
             var messageText = stepContext.Options?.ToString() ?? "What can I help you with today?\nSay something like \"Book a flight from Paris to Berlin on March 22, 2020\"";
             var promptMessage = MessageFactory.Text(messageText, messageText, InputHints.ExpectingInput);
             return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
+        }
+
+        private async Task<DialogTurnResult> IntroStepNewAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        {
+            
+                await stepContext.Context.SendActivityAsync(
+                    MessageFactory.Text("Welcome to HealthCare AI System!", inputHint: InputHints.IgnoringInput), cancellationToken);
+
+                return await stepContext.NextAsync(null, cancellationToken);
         }
 
         private async Task<DialogTurnResult> ActStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)

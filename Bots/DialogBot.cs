@@ -47,9 +47,20 @@ namespace MagicBot001.Bots
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
             Logger.LogInformation("Running dialog with Message Activity.");
+             
+            // Create single instance of sample data from first line of dataset for model input
+            MLModel.ModelInput sampleData = new MLModel.ModelInput()
+            {
+                Questions = turnContext.Activity.Text,
+            };
 
-            // Run the Dialog with the new message Activity.
-            await Dialog.RunAsync(turnContext, ConversationState.CreateProperty<DialogState>("DialogState"), cancellationToken);
+            // Make a single prediction on the sample data and print results
+            var predictionResult = MLModel.Predict(sampleData);
+
+            await turnContext.SendActivityAsync("HealthCare Agent : "+ predictionResult.PredictedLabel);
+           
+            //Run the Dialog with the new message Activity.
+            //await Dialog.RunAsync(turnContext, ConversationState.CreateProperty<DialogState>("DialogState"), cancellationToken);
         }
     }
 }
